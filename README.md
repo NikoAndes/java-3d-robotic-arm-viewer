@@ -119,4 +119,3 @@ mvn clean javafx:run
 - Jerarquía de transformaciones para movimientos realistas
 - Sistema de iluminación con luz ambiental y direccional
 
-¡Tu brazo robótico está listo para ser visualizado y controlado interactivamente!
