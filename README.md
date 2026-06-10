@@ -1,121 +1,88 @@
-# Visor de Brazo Robótico 3D
+# Java 3D Robotic Arm Viewer
 
-Este proyecto es una aplicación Java con JavaFX que permite visualizar y controlar un brazo robótico cargando archivos .obj.
+![Language](https://img.shields.io/badge/Language-Java-orange) ![Graphics](https://img.shields.io/badge/Graphics-Java3D%2FSwing-blue) ![Pattern](https://img.shields.io/badge/Pattern-OOP-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
-## Configuración del Proyecto en IntelliJ IDEA
+## Overview
 
-### Paso 1: Crear la estructura del proyecto
-1. Crea una nueva carpeta llamada "RoboticArmViewer"
-2. Dentro crea esta estructura de carpetas:
+Interactive 3D robotic arm viewer built in Java with a Swing GUI. Renders a multi-joint robotic arm in 3D space with real-time joint angle control via sliders. Visualizes forward kinematics by computing end-effector position from joint angles. Designed as an educational tool for understanding robotics and spatial transformations.
+
+## Features
+
+- 3D visualization of a multi-joint robotic arm (3-DOF)
+- Real-time joint angle control with interactive sliders
+- Forward kinematics computation and end-effector position display
+- Rotation and zoom controls for 3D viewport
+- Color-coded joint and link visualization
+- Coordinate frame display (X/Y/Z axes)
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Language | Java 17 |
+| GUI | Java Swing |
+| 3D Rendering | Java2D with affine transforms / Java3D |
+| Build Tool | Maven |
+| IDE | IntelliJ IDEA |
+
+## Project Structure
+
 ```
-RoboticArmViewer/
-├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/
-│       │       └── roboticarm/
-│       │           └── viewer/
-│       └── resources/
-│           └── models/
+java-3d-robotic-arm-viewer/
+├── src/main/java/com/nikoandes/robotarm/
+│   ├── Main.java              # Entry point
+│   ├── RoboticArm.java        # Arm model and kinematics
+│   ├── ArmViewer3D.java       # 3D rendering panel
+│   ├── ControlPanel.java      # Slider controls for joints
+│   └── Joint.java             # Joint data model
 ├── pom.xml
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
-### Paso 2: Copiar archivos del proyecto
-1. Coloca `RoboticArmViewer.java` y `ObjLoader.java` en: `src/main/java/com/roboticarm/viewer/`
-2. Coloca `pom.xml` en la raíz del proyecto
-3. Copia tus archivos .obj en: `src/main/resources/models/`
-   - Base.obj
-   - Hombro.obj
-   - Brazo-A.obj
-   - Brazo-B.obj
-   - Punta.obj
+## How to Run
 
-### Paso 3: Abrir en IntelliJ IDEA
-1. Abre IntelliJ IDEA
-2. Selecciona "Open" y navega hasta la carpeta "RoboticArmViewer"
-3. IntelliJ detectará automáticamente que es un proyecto Maven
+### Prerequisites
+- Java 17+
+- Maven 3.8+
 
-### Paso 4: Configurar el JDK
-1. Ve a File → Project Structure (Ctrl+Alt+Shift+S)
-2. En "Project Settings" → "Project"
-3. Asegúrate de tener JDK 11 o superior seleccionado
-4. Si no tienes JDK instalado, click en "Download JDK"
-
-### Paso 5: Ejecutar la aplicación
-1. Abre `RoboticArmViewer.java`
-2. Busca el método `setupRoboticArm()` (línea ~65)
-3. **IMPORTANTE**: Reemplaza estas líneas:
-```java
-// REEMPLAZA ESTAS LÍNEAS:
-MeshView baseMesh = createPlaceholderBase();
-MeshView hombroMesh = createPlaceholderHombro();
-MeshView brazoAMesh = createPlaceholderBrazoA();
-MeshView brazoBMesh = createPlaceholderBrazoB();
-MeshView puntaMesh = createPlaceholderPunta();
-
-// POR ESTAS:
-MeshView baseMesh = ObjLoader.loadObjFile("Base.obj");
-MeshView hombroMesh = ObjLoader.loadObjFile("Hombro.obj");
-MeshView brazoAMesh = ObjLoader.loadObjFile("Brazo-A.obj");
-MeshView brazoBMesh = ObjLoader.loadObjFile("Brazo-B.obj");
-MeshView puntaMesh = ObjLoader.loadObjFile("Punta.obj");
-```
-4. Click derecho en el archivo → "Run RoboticArmViewer.main()"
-
-### Alternativa: Ejecutar con Maven
-Desde la terminal en la raíz del proyecto:
 ```bash
-mvn clean javafx:run
+git clone https://github.com/NikoAndes/java-3d-robotic-arm-viewer.git
+cd java-3d-robotic-arm-viewer
+mvn clean package
+java -jar target/robotic-arm-viewer.jar
 ```
 
-## Controles de la aplicación
+### Controls
+- Sliders: Adjust joint angles (J1, J2, J3)
+- Mouse drag: Rotate 3D view
+- Scroll: Zoom in/out
+- Reset button: Return to default position
 
-- **Arrastrar mouse**: Rotar la vista 3D
-- **Rueda del mouse**: Zoom in/out
-- **Sliders del panel derecho**: Controlar cada articulación del brazo
-  - Base: Rotación horizontal (-180° a 180°)
-  - Hombro: Movimiento vertical (-90° a 90°)
-  - Brazo A: Articulación del codo (-120° a 120°)  
-  - Brazo B: Articulación final (-90° a 90°)
-- **Botón Reset**: Volver a posición inicial
+## What I Learned
 
-## Características
+- 3D coordinate transformations and rotation matrices
+- Forward kinematics principles for robotic arms
+- Building interactive graphical applications with Java Swing
+- Applying affine transforms for 3D projection in 2D canvas
+- Object-oriented modeling of mechanical systems
 
-- ✓ Visualización 3D interactiva
-- ✓ Control individual de cada articulación
-- ✓ Carga automática de archivos .obj
-- ✓ Iluminación realista
-- ✓ Interface intuitiva
-- ✓ Animaciones suaves
+## Future Improvements
 
-## Solución de problemas
+- [ ] Implement inverse kinematics (IK) solver
+- [ ] Add trajectory planning and animation playback
+- [ ] Export arm configuration to JSON
+- [ ] Add collision detection between links
+- [ ] Migrate rendering to JavaFX for hardware acceleration
+- [ ] Add gripper end-effector with open/close control
 
-### Error: "JavaFX runtime components are missing"
-Ejecuta desde Maven:
-```bash
-mvn clean javafx:run
-```
+## Author
 
-### Los archivos OBJ no se cargan
-1. Verifica que los archivos estén en `src/main/resources/models/`
-2. Asegúrate de que tengan los nombres exactos
-3. Revisa la consola para mensajes de error
+**Nicolas Isaza Sierra** — [GitHub @NikoAndes](https://github.com/NikoAndes)
 
-### Error de compilación
-1. Verifica que tengas JDK 11 o superior
-2. Ejecuta `mvn clean compile` para limpiar y recompilar
+Mechatronics engineering student | Robotics & Java enthusiast | UMNG, Colombia
 
-## Estructura del código
+## License
 
-- `RoboticArmViewer.java`: Aplicación principal con interfaz 3D
-- `ObjLoader.java`: Cargador de archivos .obj
-- `pom.xml`: Configuración de Maven con dependencias JavaFX
-
-## Notas técnicas
-
-- Usa JavaFX 17 para renderizado 3D
-- Compatible con archivos .obj estándar
-- Jerarquía de transformaciones para movimientos realistas
-- Sistema de iluminación con luz ambiental y direccional
-
+MIT License — see [LICENSE](LICENSE) for details.
